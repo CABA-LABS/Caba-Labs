@@ -1,0 +1,1514 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CABA LABS</title>
+        <meta
+            name="description"
+            content="CABA LABS builds custom software systems for enterprise and ships standalone applications."
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ["Inter", "system-ui", "sans-serif"],
+                            mono: ['"JetBrains Mono"', "monospace"],
+                        },
+                    },
+                },
+            };
+        </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            /* ── RESET & BASE ── */
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                background: #ffffff;
+                color: #111111;
+            }
+            body {
+                font-family: "Inter", system-ui, sans-serif;
+                background: #ffffff;
+                color: #111111;
+                -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
+            }
+            ::selection {
+                background: rgba(0, 245, 255, 0.18);
+            }
+            ::-webkit-scrollbar {
+                width: 3px;
+            }
+            ::-webkit-scrollbar-track {
+                background: #fff;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #d4d4d4;
+                border-radius: 2px;
+            }
+
+            /* ── GRADIENT ACCENT (logo palette) ── */
+            .grad {
+                background: linear-gradient(135deg, #00f5ff 0%, #8b5cf6 100%);
+            }
+            .grad-text {
+                background: linear-gradient(135deg, #00c8d8 0%, #7c3aed 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .grad-border {
+                border-image: linear-gradient(135deg, #00f5ff, #8b5cf6) 1;
+            }
+
+            /* ── TOP ACCENT BAR ── */
+            .top-bar {
+                height: 3px;
+                background: linear-gradient(
+                    90deg,
+                    #00f5ff 0%,
+                    #8b5cf6 60%,
+                    #00f5ff 100%
+                );
+                background-size: 200% 100%;
+                animation: slideGrad 4s linear infinite;
+            }
+            @keyframes slideGrad {
+                0% {
+                    background-position: 0% 50%;
+                }
+                100% {
+                    background-position: 200% 50%;
+                }
+            }
+
+            /* ── NAV ── */
+            .nav-wrap {
+                position: sticky;
+                top: 0;
+                z-index: 50;
+                background: rgba(255, 255, 255, 0.88);
+                backdrop-filter: blur(18px);
+                -webkit-backdrop-filter: blur(18px);
+                border-bottom: 1px solid #ebebeb;
+            }
+            .nav-inner {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 28px;
+                height: 56px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 32px;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                text-decoration: none;
+            }
+            .brand-name {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.82rem;
+                font-weight: 500;
+                letter-spacing: 0.14em;
+                color: #111;
+                transition: color 0.15s;
+            }
+            .brand:hover .brand-name {
+                color: #7c3aed;
+            }
+
+            .nav-links {
+                display: flex;
+                align-items: center;
+                gap: 28px;
+            }
+            .nav-links a {
+                font-size: 0.82rem;
+                color: #888;
+                text-decoration: none;
+                letter-spacing: 0.01em;
+                transition: color 0.15s;
+            }
+            .nav-links a:hover {
+                color: #111;
+            }
+
+            .btn-connect {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.72rem;
+                letter-spacing: 0.07em;
+                color: #111;
+                border: 1.5px solid #111;
+                border-radius: 6px;
+                padding: 7px 16px;
+                background: transparent;
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-block;
+                transition:
+                    background 0.18s,
+                    color 0.18s,
+                    border-color 0.18s;
+                white-space: nowrap;
+            }
+            .btn-connect:hover {
+                background: #111;
+                color: #fff;
+            }
+
+            /* ── MARQUEE STRIP ── */
+            .ticker-wrap {
+                overflow: hidden;
+                border-top: 1px solid #ebebeb;
+                border-bottom: 1px solid #ebebeb;
+                background: #fafafa;
+                padding: 10px 0;
+            }
+            .ticker-track {
+                display: flex;
+                gap: 0;
+                width: max-content;
+                animation: ticker 28s linear infinite;
+            }
+            @keyframes ticker {
+                from {
+                    transform: translateX(0);
+                }
+                to {
+                    transform: translateX(-50%);
+                }
+            }
+            .ticker-item {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.7rem;
+                letter-spacing: 0.1em;
+                color: #bbb;
+                white-space: nowrap;
+                padding: 0 32px;
+            }
+            .ticker-item span {
+                color: #8b5cf6;
+                margin-right: 6px;
+            }
+
+            /* ── HERO ── */
+            .hero {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 100px 28px 80px;
+            }
+            .hero-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                border: 1px solid #e0e0e0;
+                border-radius: 100px;
+                padding: 5px 14px;
+                margin-bottom: 52px;
+            }
+            .badge-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #22c55e;
+            }
+            @keyframes pulseGreen {
+                0%,
+                100% {
+                    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+                }
+                50% {
+                    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+                }
+            }
+            .badge-dot {
+                animation: pulseGreen 2.5s ease-in-out infinite;
+            }
+            .badge-text {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.68rem;
+                letter-spacing: 0.12em;
+                color: #555;
+                text-transform: uppercase;
+            }
+
+            .hero-headline {
+                font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+                font-weight: 300;
+                line-height: 1.06;
+                letter-spacing: -0.03em;
+                color: #111;
+                margin-bottom: 32px;
+                max-width: 820px;
+            }
+            .hero-headline em {
+                font-style: italic;
+                font-weight: 300;
+            }
+
+            .hero-sub {
+                font-size: 1.05rem;
+                color: #777;
+                font-weight: 400;
+                line-height: 1.75;
+                max-width: 520px;
+                margin-bottom: 52px;
+            }
+
+            .hero-ctas {
+                display: flex;
+                align-items: center;
+                gap: 18px;
+                flex-wrap: wrap;
+            }
+
+            .btn-primary {
+                background: #111;
+                color: #fff;
+                font-size: 0.875rem;
+                font-weight: 500;
+                border-radius: 8px;
+                padding: 13px 26px;
+                border: none;
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-block;
+                transition:
+                    background 0.18s,
+                    transform 0.18s,
+                    box-shadow 0.18s;
+                letter-spacing: 0.01em;
+            }
+            .btn-primary:hover {
+                background: #7c3aed;
+                transform: translateY(-1px);
+                box-shadow: 0 8px 24px rgba(124, 58, 237, 0.25);
+            }
+
+            .btn-ghost {
+                font-size: 0.875rem;
+                color: #888;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                transition:
+                    color 0.15s,
+                    gap 0.15s;
+            }
+            .btn-ghost:hover {
+                color: #111;
+                gap: 10px;
+            }
+
+            /* ── SECTION BASE ── */
+            .section {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 88px 28px;
+            }
+            .section-divider {
+                border: none;
+                border-top: 1px solid #ebebeb;
+            }
+
+            .section-label {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.68rem;
+                letter-spacing: 0.14em;
+                color: #bbb;
+                text-transform: uppercase;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 36px;
+            }
+            .section-label::before {
+                content: "";
+                display: inline-block;
+                width: 20px;
+                height: 1px;
+                background: linear-gradient(90deg, #00f5ff, #8b5cf6);
+            }
+
+            .section-title {
+                font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+                font-weight: 300;
+                letter-spacing: -0.025em;
+                line-height: 1.12;
+                color: #111;
+            }
+
+            /* ── PRODUCTS ── */
+            #products {
+                background: #fafafa;
+                border-top: 1px solid #ebebeb;
+                border-bottom: 1px solid #ebebeb;
+            }
+            #products .section {
+                padding-top: 88px;
+                padding-bottom: 88px;
+            }
+
+            .products-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 16px;
+                margin-top: 48px;
+            }
+
+            .product-card {
+                background: #ffffff;
+                border: 1px solid #e8e8e8;
+                border-radius: 12px;
+                padding: 24px;
+                text-decoration: none;
+                color: inherit;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                transition:
+                    border-color 0.2s,
+                    box-shadow 0.2s,
+                    transform 0.2s;
+                position: relative;
+                overflow: hidden;
+            }
+            .product-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, #00f5ff, #8b5cf6);
+                opacity: 0;
+                transition: opacity 0.2s;
+            }
+            .product-card:hover {
+                border-color: transparent;
+                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+                transform: translateY(-2px);
+            }
+            .product-card:hover::before {
+                opacity: 1;
+            }
+
+            .product-card-header {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+
+            .product-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 9px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #ebebeb;
+                background: #f5f5f5;
+                flex-shrink: 0;
+            }
+
+            .product-arrow {
+                font-size: 1.1rem;
+                color: #ccc;
+                transition:
+                    color 0.2s,
+                    transform 0.2s;
+                line-height: 1;
+            }
+            .product-card:hover .product-arrow {
+                color: #8b5cf6;
+                transform: translate(2px, -2px);
+            }
+
+            .product-name {
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: #111;
+            }
+            .product-version {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.68rem;
+                color: #bbb;
+                border: 1px solid #ebebeb;
+                border-radius: 4px;
+                padding: 2px 7px;
+                letter-spacing: 0.06em;
+            }
+            .product-desc {
+                font-size: 0.8rem;
+                color: #888;
+                line-height: 1.65;
+            }
+            .product-tags {
+                display: flex;
+                gap: 6px;
+                flex-wrap: wrap;
+                margin-top: auto;
+                padding-top: 8px;
+            }
+            .product-tag {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.62rem;
+                letter-spacing: 0.06em;
+                color: #7c3aed;
+                background: rgba(124, 58, 237, 0.07);
+                border: 1px solid rgba(124, 58, 237, 0.15);
+                border-radius: 4px;
+                padding: 2px 7px;
+            }
+
+            .soon-card {
+                background: #f9f9f9;
+                border: 1.5px dashed #e0e0e0;
+                border-radius: 12px;
+                padding: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 8px;
+                min-height: 160px;
+            }
+            .soon-label {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.68rem;
+                letter-spacing: 0.12em;
+                color: #ccc;
+                text-transform: uppercase;
+            }
+
+            /* ── ABOUT ── */
+            .about-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 80px;
+                align-items: start;
+                margin-top: 56px;
+            }
+            @media (max-width: 700px) {
+                .about-grid {
+                    grid-template-columns: 1fr;
+                    gap: 48px;
+                }
+            }
+
+            .about-body {
+                font-size: 1rem;
+                color: #555;
+                line-height: 1.85;
+            }
+            .about-body p + p {
+                margin-top: 18px;
+            }
+            .about-body strong {
+                color: #111;
+                font-weight: 500;
+            }
+
+            .pillar-list {
+                display: flex;
+                flex-direction: column;
+                gap: 28px;
+            }
+            .pillar {
+                padding-left: 18px;
+                border-left: 2px solid #ebebeb;
+                transition: border-color 0.2s;
+            }
+            .pillar:hover {
+                border-color: #00c8d8;
+            }
+            .pillar-title {
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: #111;
+                margin-bottom: 6px;
+            }
+            .pillar-body {
+                font-size: 0.78rem;
+                color: #999;
+                line-height: 1.7;
+            }
+
+            /* ── CONTACT ── */
+            #contact {
+                background: #fafafa;
+                border-top: 1px solid #ebebeb;
+            }
+            #contact .section {
+                padding-top: 88px;
+                padding-bottom: 88px;
+            }
+
+            .contact-wrap {
+                display: grid;
+                grid-template-columns: 1fr 1.4fr;
+                gap: 80px;
+                align-items: start;
+            }
+            @media (max-width: 720px) {
+                .contact-wrap {
+                    grid-template-columns: 1fr;
+                    gap: 48px;
+                }
+            }
+
+            .contact-intro {
+                font-size: 0.875rem;
+                color: #888;
+                line-height: 1.8;
+                margin-top: 20px;
+            }
+            .contact-detail {
+                margin-top: 36px;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+            .contact-detail-item {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.72rem;
+                color: #aaa;
+                letter-spacing: 0.06em;
+            }
+            .contact-detail-item strong {
+                color: #111;
+                display: block;
+                font-weight: 500;
+                margin-bottom: 2px;
+            }
+
+            .field-label {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.68rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #aaa;
+                display: block;
+                margin-bottom: 8px;
+            }
+            .field {
+                width: 100%;
+                background: #ffffff;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                color: #111;
+                font-size: 0.875rem;
+                padding: 12px 14px;
+                outline: none;
+                font-family: "Inter", sans-serif;
+                transition:
+                    border-color 0.18s,
+                    box-shadow 0.18s;
+            }
+            .field::placeholder {
+                color: #ccc;
+            }
+            .field:focus {
+                border-color: #8b5cf6;
+                box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            }
+            textarea.field {
+                min-height: 140px;
+                resize: vertical;
+                font-size: 0.82rem;
+                line-height: 1.7;
+            }
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+            @media (max-width: 500px) {
+                .form-row {
+                    grid-template-columns: 1fr;
+                }
+            }
+            .form-fields {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .btn-submit {
+                width: 100%;
+                background: #111;
+                color: #fff;
+                font-size: 0.875rem;
+                font-weight: 500;
+                border-radius: 8px;
+                padding: 14px;
+                border: none;
+                cursor: pointer;
+                letter-spacing: 0.02em;
+                transition:
+                    background 0.18s,
+                    box-shadow 0.18s,
+                    transform 0.18s;
+                margin-top: 4px;
+            }
+            .btn-submit:hover {
+                background: #7c3aed;
+                box-shadow: 0 8px 24px rgba(124, 58, 237, 0.22);
+                transform: translateY(-1px);
+            }
+
+            /* ── FOOTER ── */
+            .footer {
+                border-top: 1px solid #ebebeb;
+                padding: 28px;
+            }
+            .footer-inner {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            .footer-brand {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .footer-copy {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.68rem;
+                color: #ccc;
+                letter-spacing: 0.06em;
+            }
+            .footer-status {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .footer-status-text {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.65rem;
+                letter-spacing: 0.1em;
+                color: #aaa;
+                text-transform: uppercase;
+            }
+            .footer-links {
+                display: flex;
+                gap: 18px;
+            }
+            .footer-links a {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.65rem;
+                color: #ccc;
+                text-decoration: none;
+                letter-spacing: 0.06em;
+                transition: color 0.15s;
+            }
+            .footer-links a:hover {
+                color: #111;
+            }
+
+            /* ── LOGO SVG ── */
+            .logo-svg {
+                width: 28px;
+                height: 28px;
+                display: block;
+            }
+
+            /* ── MOBILE NAV HIDE ── */
+            @media (max-width: 600px) {
+                .nav-links {
+                    display: none;
+                }
+                .hero-headline {
+                    font-size: 2.6rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Animated top accent bar -->
+        <div class="top-bar"></div>
+
+        <!-- ══════════════════════════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════════════════════════ -->
+        <div class="nav-wrap">
+            <div class="nav-inner">
+                <a href="#" class="brand">
+                    <svg
+                        class="logo-svg"
+                        viewBox="0 0 120 120"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <defs>
+                            <linearGradient
+                                id="lg1"
+                                x1="20%"
+                                y1="20%"
+                                x2="85%"
+                                y2="85%"
+                            >
+                                <stop offset="0%" stop-color="#00f5ff" />
+                                <stop offset="100%" stop-color="#8b5cf6" />
+                            </linearGradient>
+                        </defs>
+                        <rect
+                            x="10"
+                            y="10"
+                            width="100"
+                            height="100"
+                            rx="28"
+                            fill="url(#lg1)"
+                        />
+                        <text
+                            x="60"
+                            y="60"
+                            font-family="Arial Black, sans-serif"
+                            font-size="78"
+                            font-weight="900"
+                            fill="#fffffa"
+                            text-anchor="middle"
+                            dominant-baseline="middle"
+                        >
+                            C
+                        </text>
+                    </svg>
+                    <span class="brand-name">CABA LABS</span>
+                </a>
+
+                <nav class="nav-links">
+                    <a href="#products">Products</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+
+                <a href="#contact" class="btn-connect">Connect With Us</a>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════════════════════════ -->
+        <div class="hero">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                <span class="badge-text">Active Development</span>
+            </div>
+
+            <h1 class="hero-headline">
+                We build the systems<br />
+                behind your business<br />
+                and the tools your<br />
+                <em class="grad-text">team reaches for.</em>
+            </h1>
+
+            <p class="hero-sub">
+                Custom enterprise software and a growing suite of downloadable
+                utilities built to be fast, straightforward, and easy to own.
+            </p>
+
+            <div class="hero-ctas">
+                <a href="#contact" class="btn-primary">Start a project</a>
+                <a href="#products" class="btn-ghost">
+                    See what we ship
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path
+                            d="M3 7h8M8 4.5l2.5 2.5L8 9.5"
+                            stroke="currentColor"
+                            stroke-width="1.3"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════════════
+       TICKER STRIP
+  ══════════════════════════════════════════════════════════════ -->
+        <div class="ticker-wrap">
+            <div class="ticker-track">
+                <!-- duplicated for seamless loop -->
+                <span class="ticker-item"
+                    ><span>◆</span>Custom ERP & Internal Tooling</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Cross-Platform Native Apps</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Database Architecture</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Security Workflow Automation</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Offline-First Utilities</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Enterprise Systems Integration</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>macOS · Windows · Linux</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Custom ERP & Internal Tooling</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Cross-Platform Native Apps</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Database Architecture</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Security Workflow Automation</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Offline-First Utilities</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>Enterprise Systems Integration</span
+                >
+                <span class="ticker-item"
+                    ><span>◆</span>macOS · Windows · Linux</span
+                >
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════════════
+       PRODUCTS
+  ══════════════════════════════════════════════════════════════ -->
+        <section id="products">
+            <div class="section">
+                <div class="section-label">Products</div>
+
+                <h2 class="section-title">
+                    Tools we've built<br />and ship ourselves.
+                </h2>
+
+                <div class="products-grid">
+                    <!-- DataPilot -->
+                    <a
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="product-card"
+                    >
+                        <div class="product-card-header">
+                            <div class="product-icon">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <rect
+                                        x="2"
+                                        y="3"
+                                        width="12"
+                                        height="9"
+                                        rx="2"
+                                        stroke="#7c3aed"
+                                        stroke-width="1.2"
+                                    />
+                                    <path
+                                        d="M5 7h6M5 9.5h3.5"
+                                        stroke="#7c3aed"
+                                        stroke-width="1"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                            </div>
+                            <span class="product-arrow">↗</span>
+                        </div>
+                        <div>
+                            <div
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    margin-bottom: 6px;
+                                "
+                            >
+                                <span class="product-name">DataPilot</span>
+                                <span class="product-version">v1.4.0</span>
+                            </div>
+                            <p class="product-desc">
+                                A local database explorer. Connect to Postgres,
+                                SQLite, or MySQL and browse your schema without
+                                anything going to the cloud.
+                            </p>
+                        </div>
+                        <div class="product-tags">
+                            <span class="product-tag">macOS</span>
+                            <span class="product-tag">Windows</span>
+                        </div>
+                    </a>
+
+                    <!-- JamPesa -->
+                    <a
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="product-card"
+                    >
+                        <div class="product-card-header">
+                            <div class="product-icon">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <circle
+                                        cx="8"
+                                        cy="8"
+                                        r="5.5"
+                                        stroke="#00b8cc"
+                                        stroke-width="1.2"
+                                    />
+                                    <path
+                                        d="M8 5.5V8.5l2 1.2"
+                                        stroke="#00b8cc"
+                                        stroke-width="1.1"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                            </div>
+                            <span class="product-arrow">↗</span>
+                        </div>
+                        <div>
+                            <div
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    margin-bottom: 6px;
+                                "
+                            >
+                                <span class="product-name">JamPesa</span>
+                                <span class="product-version">v0.9.2</span>
+                            </div>
+                            <p class="product-desc">
+                                A lightweight, secure fintech platform and
+                                digital ledger engineered for high-throughput
+                                localized transactional processing. Focused on
+                                low-friction asset handling, immediate ledger
+                                settlement, and mobile-first user experience.
+                            </p>
+                        </div>
+                        <div class="product-tags">
+                            <span class="product-tag">macOS</span>
+                            <span class="product-tag">Linux</span>
+                        </div>
+                    </a>
+
+                    <!-- VaultKey -->
+                    <a
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="product-card"
+                    >
+                        <div class="product-card-header">
+                            <div class="product-icon">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <rect
+                                        x="3.5"
+                                        y="7"
+                                        width="9"
+                                        height="6.5"
+                                        rx="1.5"
+                                        stroke="#7c3aed"
+                                        stroke-width="1.2"
+                                    />
+                                    <path
+                                        d="M5.5 7V5.5a2.5 2.5 0 015 0V7"
+                                        stroke="#7c3aed"
+                                        stroke-width="1.2"
+                                        stroke-linecap="round"
+                                    />
+                                    <circle
+                                        cx="8"
+                                        cy="10"
+                                        r="1"
+                                        fill="#7c3aed"
+                                    />
+                                </svg>
+                            </div>
+                            <span class="product-arrow">↗</span>
+                        </div>
+                        <div>
+                            <div
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    margin-bottom: 6px;
+                                "
+                            >
+                                <span class="product-name">VaultKey</span>
+                                <span class="product-version">v2.0.1</span>
+                            </div>
+                            <p class="product-desc">
+                                AES-256 credential vault. Fully offline, no
+                                sync, no subscription. Your passwords live on
+                                your drive.
+                            </p>
+                        </div>
+                        <div class="product-tags">
+                            <span class="product-tag">macOS</span>
+                            <span class="product-tag">Windows</span>
+                        </div>
+                    </a>
+
+                    <!-- CourtUpdateApp (Legal Tech System) -->
+                    <a
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="product-card"
+                    >
+                        <div class="product-card-header">
+                            <div class="product-icon">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <circle
+                                        cx="4"
+                                        cy="4.5"
+                                        r="1.5"
+                                        fill="#00b8cc"
+                                    />
+                                    <circle
+                                        cx="8"
+                                        cy="8"
+                                        r="1.5"
+                                        fill="#00b8cc"
+                                    />
+                                    <circle
+                                        cx="12"
+                                        cy="11.5"
+                                        r="1.5"
+                                        fill="#00b8cc"
+                                    />
+                                    <path
+                                        d="M5.5 4.5H8M8 8h4"
+                                        stroke="#00b8cc"
+                                        stroke-width="1"
+                                        stroke-linecap="round"
+                                        opacity="0.4"
+                                    />
+                                </svg>
+                            </div>
+                            <span class="product-arrow">↗</span>
+                        </div>
+                        <div>
+                            <div
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    margin-bottom: 6px;
+                                "
+                            >
+                                <span class="product-name">CourtUpdateApp</span>
+                                <span class="product-version">v1.1.0</span>
+                            </div>
+                            <p class="product-desc">
+                                dedicated legal technology infrastructure
+                                platform engineered to streamline, track, and
+                                modernize court case processes. Built to
+                                eliminate industrial administrative bottlenecks
+                                through automated notification pipelines, f ast
+                                data retrieval, and secure record management.
+                            </p>
+                        </div>
+                        <div class="product-tags">
+                            <span class="product-tag">macOS</span>
+                            <span class="product-tag">Windows</span>
+                            <span class="product-tag">Linux</span>
+                        </div>
+                    </a>
+
+                    <!-- AuditTrail -->
+                    <a
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="product-card"
+                    >
+                        <div class="product-card-header">
+                            <div class="product-icon">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M2.5 12L8 3.5l5.5 8.5"
+                                        stroke="#7c3aed"
+                                        stroke-width="1.2"
+                                        stroke-linejoin="round"
+                                        fill="none"
+                                    />
+                                    <path
+                                        d="M5 9h6"
+                                        stroke="#7c3aed"
+                                        stroke-width="1"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                            </div>
+                            <span class="product-arrow">↗</span>
+                        </div>
+                        <div>
+                            <div
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    margin-bottom: 6px;
+                                "
+                            >
+                                <span class="product-name">AuditTrail</span>
+                                <span class="product-version">v1.0.3</span>
+                            </div>
+                            <p class="product-desc">
+                                Event logger and diff tracker for internal
+                                systems. Tamper evident records that export to
+                                JSON, CSV, or SQLite.
+                            </p>
+                        </div>
+                        <div class="product-tags">
+                            <span class="product-tag">macOS</span>
+                            <span class="product-tag">Windows</span>
+                        </div>
+                    </a>
+
+                    <!-- Coming soon -->
+                    <div class="soon-card">
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                        >
+                            <path
+                                d="M10 4v12M4 10h12"
+                                stroke="#ddd"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                        <span class="soon-label">Next release — TBA</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════
+       ABOUT
+  ══════════════════════════════════════════════════════════════ -->
+        <section id="about">
+            <div class="section">
+                <div class="section-label">About</div>
+
+                <h2 class="section-title">
+                    Two things we're<br />genuinely good at.
+                </h2>
+
+                <div class="about-grid">
+                    <div class="about-body">
+                        <p>
+                            We write custom software for companies that need
+                            something built to their exact spec not a SaaS
+                            product they have to work around. That means
+                            internal tools, database systems, workflow
+                            automation, and security infrastructure.
+                        </p>
+                        <p>
+                            On the side, we build and ship our own desktop apps.
+                            Small, focused utilities that do one thing well and
+                            don't require an account to use.
+                        </p>
+                        <p>
+                            <strong></strong>
+                        </p>
+                    </div>
+
+                    <div class="pillar-list">
+                        <div class="pillar">
+                            <div class="pillar-title">
+                                Enterprise & Internal Systems
+                            </div>
+                            <div class="pillar-body">
+                                Custom ERP tools, internal dashboards, database
+                                architectures, and security workflow automation.
+                                Built for your stack, not a generic one.
+                            </div>
+                        </div>
+                        <div class="pillar">
+                            <div class="pillar-title">Desktop Applications</div>
+                            <div class="pillar-body">
+                                Standalone, downloadable utilities for macOS,
+                                Windows, and Linux. Offline capable, no cloud
+                                required, no subscription model.
+                            </div>
+                        </div>
+                        <div class="pillar">
+                            <div class="pillar-title">
+                                Fast & Dependency Light
+                            </div>
+                            <div class="pillar-body">
+                                We keep dependency trees shallow. Fewer moving
+                                parts means fewer failure modes and software
+                                that's actually yours to understand and
+                                maintain.
+                            </div>
+                        </div>
+                        <div class="pillar">
+                            <div class="pillar-title">
+                                Ownership, Not Lock-In
+                            </div>
+                            <div class="pillar-body">
+                                When a project wraps up, you own the code
+                                outright. No black boxes, no ongoing licensing,
+                                no mystery behind the curtain.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════
+       CONTACT
+  ══════════════════════════════════════════════════════════════ -->
+        <section id="contact">
+            <div class="section">
+                <div class="section-label">Contact</div>
+
+                <div class="contact-wrap">
+                    <!-- Left -->
+                    <div>
+                        <h2 class="section-title">
+                            Let's talk<br />about your project.
+                        </h2>
+                        <p class="contact-intro">
+                            Whether it's a new internal system, an integration
+                            with something you already run, or an idea for an
+                            app fill out the form and we'll get back to you
+                            within a business day.
+                        </p>
+                        <div class="contact-detail">
+                            <div class="contact-detail-item">
+                                <strong>Response time</strong>
+                                Within 1 business day
+                            </div>
+                            <div class="contact-detail-item">
+                                <strong>Based in</strong>
+                                Jamaica
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact form — opens visitor's email client directly -->
+                    <form
+                        id="contact-form"
+                        class="form-fields"
+                        onsubmit="handleContact(event)"
+                        novalidate
+                    >
+                        <div class="form-row">
+                            <div>
+                                <label class="field-label"
+                                    >Name / Organization</label
+                                >
+                                <input
+                                    id="cf-name"
+                                    type="text"
+                                    required
+                                    placeholder="Acme Inc."
+                                    class="field"
+                                />
+                            </div>
+                            <div>
+                                <label class="field-label">Your Email</label>
+                                <input
+                                    id="cf-email"
+                                    type="email"
+                                    required
+                                    placeholder="youremail@.com"
+                                    class="field"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="field-label">Project details</label>
+                            <textarea
+                                id="cf-message"
+                                required
+                                placeholder="Tell us what you need built system type, rough scope, timeline if you have one."
+                                class="field"
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            Send it over →
+                        </button>
+                    </form>
+
+                    <script>
+                        function handleContact(e) {
+                            e.preventDefault();
+                            var name = document
+                                .getElementById("cf-name")
+                                .value.trim();
+                            var email = document
+                                .getElementById("cf-email")
+                                .value.trim();
+                            var message = document
+                                .getElementById("cf-message")
+                                .value.trim();
+
+                            if (!name || !email || !message) {
+                                alert(
+                                    "Please fill out all fields before sending.",
+                                );
+                                return;
+                            }
+
+                            var subject = encodeURIComponent(
+                                "Project Inquiry from " + name,
+                            );
+                            var body = encodeURIComponent(
+                                "Name / Organization: " +
+                                    name +
+                                    "\n" +
+                                    "Reply-to Email: " +
+                                    email +
+                                    "\n\n" +
+                                    "Project Details:\n" +
+                                    message,
+                            );
+
+                            window.location.href =
+                                "mailto:CABALABS@protonmail.com?subject=" +
+                                subject +
+                                "&body=" +
+                                body;
+                        }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════════════ -->
+        <footer class="footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <svg
+                        class="logo-svg"
+                        viewBox="0 0 120 120"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <defs>
+                            <linearGradient
+                                id="lg2"
+                                x1="20%"
+                                y1="20%"
+                                x2="85%"
+                                y2="85%"
+                            >
+                                <stop
+                                    offset="0%"
+                                    stop-color="#00f5ff"
+                                    stop-opacity="0.7"
+                                />
+                                <stop
+                                    offset="100%"
+                                    stop-color="#8b5cf6"
+                                    stop-opacity="0.7"
+                                />
+                            </linearGradient>
+                        </defs>
+                        <rect
+                            x="10"
+                            y="10"
+                            width="100"
+                            height="100"
+                            rx="28"
+                            fill="url(#lg2)"
+                        />
+                        <text
+                            x="60"
+                            y="60"
+                            font-family="Arial Black, sans-serif"
+                            font-size="78"
+                            font-weight="900"
+                            fill="#fffffa"
+                            text-anchor="middle"
+                            dominant-baseline="middle"
+                        >
+                            C
+                        </text>
+                    </svg>
+                    <span class="footer-copy">&copy; 2024 CABA-LABS</span>
+                </div>
+
+                <div class="footer-status">
+                    <span
+                        class="badge-dot"
+                        style="width: 6px; height: 6px"
+                    ></span>
+                    <span class="footer-status-text"
+                        >All remote nodes operational</span
+                    >
+                </div>
+
+                <div class="footer-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
