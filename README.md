@@ -1,6 +1,6 @@
 ## Respect for passing by  👋
 
-# Caba Labs · Landing Page
+# ·  Caba Labs · 
 
 <img width="344" height="360" alt="Screenshot 2026-06-28 at 4 00 01 PM" src="https://github.com/user-attachments/assets/b78971df-db36-4c4c-9baa-ba146f1edb88" />
 
